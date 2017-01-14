@@ -1,0 +1,26 @@
+public class Solution
+{
+	public double myPow(double x, int n)
+	{
+		if(n == 0)
+			return 1;
+
+		if(n < 0)
+			return 1 / power(x, -n);
+
+		return power(x, n);
+	}
+
+	private double power(double x, int n)
+	{
+		if(n == 0)
+			return 1;
+
+		double v = power(x, n / 2);
+
+		if((n & 1) == 0)
+			return v * v;
+
+		return v * v * x;
+	}
+}
