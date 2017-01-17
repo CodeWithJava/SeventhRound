@@ -1,41 +1,27 @@
 public class Solution
 {
-	ListNode p;
-
-	public TreeNode sortedListToBST(ListNode head)
+	public boolean isBalanced(TreeNode root)
 	{
-		if(head == null)
-			return null;
+		if(root == null)
+			return true;
 
-		p = head;
-
-		ListNode x = head;
-		int l = 0;
-
-		while(x != null)
-		{
-			l++;
-			x = x.next;
-		}
-
-		return build(0, l - 1);
+		return getHeight(root) != -1;
 	}
 
-	private TreeNode build(int l, int r)
+	private int getHeight(TreeNode node)
 	{
-		if(l > r)
-			return null;
+		if(node == null)
+			return 0;
 
-		int m = l + (r - l) / 2;
+		int l = getHeight(node.left);
+		int r = getHeight(node.right);
 
-		TreeNode left = build(l, m - 1);
-		TreeNode node = new TreeNode(p.val);
-		p = p.next;
-		TreeNode right = build(m + 1, r);
+		if(l == -1 || r == -1)
+			return -1;
 
-		node.left = left;
-		node.right = right;
+		if(Math.abs(l - r) > 1)
+			return -1;
 
-		return node;
+		return Math.max(l, r) + 1;
 	}
 }
