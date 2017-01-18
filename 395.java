@@ -5,9 +5,7 @@ public class Solution
 		if(s == null || s.length() == 0 || k < 0)
 			return 0;
 
-		char [] x = s.toCharArray();
-
-		return traversal(x, 0, s.length(), k);
+		return traversal(s.toCharArray(), 0, s.length(), k);
 	}
 
 	private int traversal(char [] x, int l, int r, int k)
@@ -27,11 +25,7 @@ public class Solution
 				for(int j = l;j < r;j++)
 				{
 					if(x[j] == i + 'a')
-					{
-						int left = traversal(x, l, j, k);
-						int right = traversal(x, j + 1, r, k);
-						return Math.max(left, right);
-					}
+						return Math.max(traversal(x, l, j, k), traversal(x, j + 1, r, k));
 				}
 			}
 		}
