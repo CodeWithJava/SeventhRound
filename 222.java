@@ -9,7 +9,7 @@ public class Solution
 		int r = getR(root);
 
 		if(l == r)
-			return (1 << (l - 1)) - 1;
+			return (2 << (l - 1)) - 1;
 
 		return countNodes(root.left) + countNodes(root.right) + 1;
 	}
