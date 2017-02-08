@@ -2,9 +2,6 @@ public class Solution
 {
 	public int countComponents(int n, int [][] edges)
 	{
-		if(n < 1)
-			return -1;
-
 		if(edges == null || edges.length == 0)
 			return n;
 
