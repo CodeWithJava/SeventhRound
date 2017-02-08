@@ -1,24 +1,43 @@
 public class Solution
 {
-	public ListNode oddEvenList(ListNode head)
+	public List<List<Integer>> verticalOrder(TreeNode root)
 	{
-		if(head == null || head.next == null)
-			return head;
+		List<List<Integer>> result = new ArrayList<>();
 
-		ListNode odd = head;
-		ListNode even = head.next;
-		ListNode evenHead = even;
+		if(root == null)
+			return result;
 
-		while(even != null && even.next != null)
+		Map<TreeNode, Integer> column = new HashMap<>();
+		column.put(root, 0);
+		Map<Integer, List<Integer>> vertical = new TreeMap<>();
+		Queue<TreeNode> q = new LinkedList<>();
+		q.offer(root);
+
+		while(!q.isEmpty())
 		{
-			odd.next = even.next;
-			odd = odd.next;
-			even.next = odd.next;
-			even = even.next;
+			TreeNode node = q.poll();
+			int col = column.get(node);
+
+			if(!vertical.containsKey(col))
+				vertical.put(col, new ArrayList<>());
+
+			vertical.get(col).add(node.val);
+
+			if(node.left != null)
+			{
+				q.offer(node.left);
+				column.put(node.left, col - 1);
+			}
+
+			if(node.right != null)
+			{
+				q.offer(node.right);
+				column.put(node.right, col + 1);
+			}
 		}
 
-		odd.next = evenHead;
+		result.addAll(vertical.values());
 
-		return head;
+		return result;
 	}
 }
