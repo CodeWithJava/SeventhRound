@@ -1,76 +1,21 @@
 public class Solution
 {
-	public List<int []> getSkyline(int [][] buildings)
+	public boolean containsNearbyDuplicate(int [] nums, int k)
 	{
-		List<int []> result = new ArrayList<>();
+		if(nums == null || nums.length == 0 || k < 0)
+			return false;
 
-		if(buildings == null || buildings.length == 0 || buildings[0].length != 3)
-			return result;
+		int min = Integer.MAX_VALUE;
+		Map<Integer, Integer> map = new HashMap<>();
 
-		List<Edge> edges = new ArrayList<>();
-
-		for(int [] building: buildings)
+		for(int i = 0;i < nums.length;i++)
 		{
-			Edge startEdge = new Edge(building[0], building[2], true);
-			edges.add(startEdge);
+			if(map.containsKey(nums[i]))
+				min = Math.min(min, i - map.get(nums[i]));
 
-			Edge endEdge = new Edge(building[1], building[2], false);
-			edges.add(endEdge);
+			map.put(nums[i], i);
 		}
 
-		Collections.sort(edges, new EdgeComparator());
-
-		Queue<Integer> heightHeap = new PriorityQueue<>(Collections.reverseOrder());
-
-		for(Edge edge: edges)
-		{
-			if(edge.isStart)
-			{
-				if(heightHeap.isEmpty() || edge.height > heightHeap.peek())
-					result.add(new int [] {edge.x, edge.height});
-
-				heightHeap.offer(edge.height);
-			}
-			else
-			{
-				heightHeap.remove(edge.height);
-
-				if(heightHeap.isEmpty())
-					result.add(new int [] {edge.x, 0});
-				else if(edge.height > heightHeap.peek())
-					result.add(new int [] {edge.x, heightHeap.peek()});
-			}
-		}
-
-		return result;
-	}
-}
-class Edge
-{
-	int x;
-	int height;
-	boolean isStart;
-
-	Edge(int x, int height, boolean isStart)
-	{
-		this.x = x;
-		this.height = height;
-		this.isStart = isStart;
-	}
-}
-class EdgeComparator implements Comparator<Edge>
-{
-	public int compare(Edge e1, Edge e2)
-	{
-		if(e1.x != e2.x)
-			return Integer.compare(e1.x, e2.x);
-
-		if(e1.isStart && e2.isStart)
-			return Integer.compare(e2.height, e1.height);
-
-		if(!e1.isStart && !e2.isStart)
-			return Integer.compare(e1.height, e2.height);
-
-		return e1.isStart ? -1:1;
+		return min <= k;
 	}
 }
