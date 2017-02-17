@@ -51,7 +51,5 @@ public class Solution
 		}
 
 		return dummyNode.next;
-
-
 	}
 }
