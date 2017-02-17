@@ -1,3 +1,4 @@
+// Solution One
 public class Solution
 {
 	public int [] nextGreaterElement(int [] findNums, int [] nums)
@@ -29,5 +30,31 @@ public class Solution
 		}
 
 		return result;
+	}
+}
+
+// Solution Two
+public class Solution
+{
+	public int [] nextGreaterElement(int [] findNums, int [] nums)
+	{
+		if(findNums == null || findNums.length == 0 || nums == null || nums.length == 0 || findNums.length > nums.length)
+			return new int [0];
+
+		Map<Integer, Integer> map = new HashMap<>();
+		Stack<Integer> stack = new Stack<>();
+
+		for(int x: nums)
+		{
+			while(!stack.isEmpty() && stack.peek() < x)
+				map.put(stack.pop, x);
+
+			stack.push(x);
+		}
+
+		for(int i = 0;i < findNums.length;i++)
+			findNums[i] = map.getOrDefault(findNums[i], -1);
+
+		return findNums;
 	}
 }
