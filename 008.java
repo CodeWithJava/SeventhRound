@@ -14,9 +14,9 @@ public class Solution
 
 		int sign = 1;
 
-		if(str.charAt(i) == '+')
+		if(i < l && str.charAt(i) == '+')
 			i++;
-		else if(str.charAt(i) == '-')
+		else if(i < l && str.charAt(i) == '-')
 		{
 			sign = -1;
 			i++;
