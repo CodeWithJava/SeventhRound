@@ -20,6 +20,15 @@ public class Solution
 				while(k < l)
 				{
 					int sum = nums[i] + nums[j] + nums[k] + nums[l];
+					
+					/*
+     					 * To handle the case nums = [1000000000,1000000000,1000000000,1000000000] target = -294967296
+					 * long sum = 0;
+					 * sum += nums[i];
+					 * sum += nums[j];
+					 * sum += nums[k];
+      					 * sum += nums[l];
+					 */
 
 					if(sum == target)
 					{
