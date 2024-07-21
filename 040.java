@@ -28,6 +28,8 @@ public class Solution
 		{
 			for(int i = start;i < candidates.length;i++)
 			{
+				if(start < i && candidates[i - 1] == candidates[i])
+					continue;
 				if(target < candidates[i])
 					return;
 
