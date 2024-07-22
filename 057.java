@@ -40,3 +40,32 @@ class IntervalComparator implements Comparator<Interval>
 		return i1.start - i2.start;
 	}
 }
+
+// Newer Version
+// For the current input and output type
+class Solution {
+    public int [][] insert(int [][] intervals, int [] newInterval) {
+        if (intervals == null || intervals.length == 0) {
+            return new int [][] {newInterval};
+        }
+
+        Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
+
+        List<int []> t = new ArrayList<>();
+
+        for (int [] interval: intervals) {
+            if (interval[1] < newInterval[0]) {
+                t.add(interval);
+            } else if (newInterval[1] < interval[0]) {
+                t.add(newInterval);
+                newInterval = interval;
+            } else if (interval[1] >= newInterval[0] || newInterval[1] >= interval[0]) {
+                newInterval = new int [] {Math.min(interval[0], newInterval[0]), Math.max(interval[1], newInterval[1])};
+            }
+        }
+
+        t.add(newInterval);
+
+        return t.toArray(new int [t.size()][]);
+    }
+}
