@@ -1,3 +1,5 @@
+// Solution One
+// Forward Idea
 public class Solution
 {
 	public boolean canJump(int [] nums)
@@ -21,4 +23,26 @@ public class Solution
 
 		return false;
 	}
+}
+
+// Solution Two
+// Backward Idea It is easy to explain during the interview
+// Source: https://www.youtube.com/watch?v=m6AymRRYgko
+// Recommand to subscribe that account
+class Solution {
+    public boolean canJump(int [] nums) {
+        if (nums == null || nums.length < 2) {
+            return true;
+        }
+
+        int curr = nums.length - 1;
+
+        for (int i = nums.length - 2;i >= 0;i--) {
+            if (i + nums[i] >= curr) {
+                curr = i;
+            }
+        }
+
+        return curr == 0;
+    }
 }
