@@ -49,7 +49,10 @@ class Solution {
             return new int [][] {newInterval};
         }
 
-        Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
+	// There is a constraint
+	// the intervals is sorted by start in ascending order
+	// if not, it should uncomment the following code statement.
+	// Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
 
         List<int []> t = new ArrayList<>();
 
