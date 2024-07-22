@@ -5,12 +5,12 @@ public class Solution
 		if(n < 0 || k < 0)
 			return "";
 
-		int fatorial = 1;
+		int factorial = 1;
 		List<Integer> t = new ArrayList<>();
 
 		for(int i = 1;i <= n;i++)
 		{
-			fatorial *= i;
+			factorial *= i;
 			t.add(i);
 		}
 
@@ -20,10 +20,10 @@ public class Solution
 
 		for(int i = 0;i < n;i++)
 		{
-			fatorial /= n - i;
+			factorial /= n - i;
 
-			int idx = k / fatorial;
-			k %= fatorial;
+			int idx = k / factorial;
+			k %= factorial;
 
 			sb.append(t.get(idx));
 			t.remove(idx);
