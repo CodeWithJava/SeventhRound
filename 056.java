@@ -1,3 +1,6 @@
+// Older Version
+// For input type is List<Interval>
+// And output type is List<Interval>
 public class Solution
 {
 	public List<Interval> merge(List<Interval> intervals)
