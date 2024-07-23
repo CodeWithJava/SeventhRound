@@ -30,7 +30,7 @@ public class Solution
 			i++;
 		}
 
-		if(isNumeric && i < l && s.charAt(i) == 'e')
+		if(isNumeric && i < l && (s.charAt(i) == 'e' || s.charAt(i) == 'E'))
 		{
 			isNumeric = false;
 			i++;
