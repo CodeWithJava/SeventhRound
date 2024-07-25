@@ -8,7 +8,8 @@ public class Solution
 		Queue<Node> q = new LinkedList<>();
 		q.offer(new Node(beginWord, 1));
 
-		wordList.add(endWord);
+		Set<String> set = new HashSet<>();
+        set.addAll(wordList);
 
 		while(!q.isEmpty())
 		{
@@ -31,10 +32,10 @@ public class Solution
 
 					String newWord = new String(alphabets);
 
-					if(wordList.contains(newWord))
+					if(set.contains(newWord))
 					{
 						q.offer(new Node(newWord, x.step + 1));
-						wordList.remove(newWord);
+						set.remove(newWord);
 					}
 				}
 
