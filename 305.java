@@ -1,54 +1,56 @@
-public class Solution
-{
-	public List<Integer> numIslands2(int m, int n, int [][] positions)
-	{
-		List<Integer> result = new ArrayList<>();
+class Solution {
+    public List<Integer> numIslands2(int m, int n, int [][] positions) {
+        List<Integer> result = new ArrayList<>();
 
-		if(m < 1 || n < 1 || positions == null || positions.length == 0)
-			return result;
+        if (m < 1 || n < 1 || positions == null || positions.length == 0) {
+            return result;
+        }
 
-		int [] root = new int [m * n];
-		Arrays.fill(root, -1);
+        boolean [] isNotWater = new boolean [m * n];
+        int [] root = new int [m * n];
+        Arrays.fill(root, -1);
 
-		int [][] dir = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int [][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-		int count = 0;
+        int count = 0;
 
-		for(int [] p: positions)
-		{
-			count++;
+        for (int [] p: positions) {
+            int idx = p[0] * n + p[1];
 
-			int idx = p[0] * n + p[1];
-			root[idx] = idx;
+            if (isNotWater[idx]) {
+                result.add(count);
+                continue;
+            }
 
-			for(int i = 0;i < dir.length;i++)
-			{
-				int x = p[0] + dir[i][0];
-				int y = p[1] + dir[i][1];
+            count++;
+            root[idx] = idx;
+            isNotWater[idx] = true;
 
-				if(x >= 0 && x <= m - 1 && y >= 0 && y <= n - 1 && root[x * n + y] != -1)
-				{
-					int thisRoot = getRoot(root, x * n + y);
+            for (int i = 0;i < dirs.length;i++) {
+                int x = p[0] + dirs[i][0];
+                int y = p[1] + dirs[i][1];
 
-					if(thisRoot != idx)
-					{
-						root[thisRoot] = idx;
-						count--;
-					}
-				}
-			}
+                if (x >= 0 && x <= m - 1 && y >= 0 && y <= n - 1 && root[x * n + y] != -1) {
+                    int thisRoot = getRoot(root, x * n + y);
 
-			result.add(count);
-		}
+                    if (thisRoot != idx) {
+                        count--;
+                        root[thisRoot] = idx;
+                    }
+                }
+            }
 
-		return result;
-	}
+            result.add(count);
+        }
 
-	private int getRoot(int [] root, int i)
-	{
-		while(i != root[i])
-			i = root[root[i]];
+        return result;
+    }
 
-		return i;
-	}
+    private int getRoot(int [] root, int i) {
+        while (i != root[i]) {
+            i = root[root[i]];
+        }
+
+        return i;
+    }
 }
