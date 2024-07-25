@@ -9,7 +9,7 @@ public class Solution
 		q.offer(new Node(beginWord, 1));
 
 		Set<String> set = new HashSet<>();
-        set.addAll(wordList);
+        	set.addAll(wordList);
 
 		while(!q.isEmpty())
 		{
