@@ -1,3 +1,34 @@
+// Solution One
+// Time Complexity: O(n2)
+// Time Limit Exceeded for the test case.
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode dummyNode = new ListNode();
+
+        while (head != null) {
+            ListNode p = dummyNode;
+
+            while (p.next != null && p.next.val <= head.val) {
+                p = p.next;
+            }
+
+            ListNode t = head.next;
+            head.next = p.next;
+            p.next = head;
+
+            head = t;
+        }
+
+        return dummyNode.next;
+    }
+}
+
+// Solution Two
+// Time Complexity: O(n + n / 2 + n / 2) = O(2n) = O(n)
 public class Solution
 {
 	public ListNode sortList(ListNode head)
