@@ -28,7 +28,7 @@ class Solution {
 }
 
 // Solution Two
-// Time Complexity: O(n + n / 2 + n / 2) = O(2n) = O(n)
+// Time Complexity: O(n / 2 + n + n / 2 + n / 2 + n / 4 + n / 4 + n / 4 + n / 4 + n / 4 + n / 8 + ... + 1) = O(n / 2 + n2) = O(n2)
 public class Solution
 {
 	public ListNode sortList(ListNode head)
