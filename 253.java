@@ -5,7 +5,7 @@ public class Solution
 		if(intervals == null || intervals.length == 0)
 			return 0;
 
-        Arrays.sort(intervals, new IntervalComparator());
+        	Arrays.sort(intervals, new IntervalComparator());
 
 		Queue<Integer> minHeap = new PriorityQueue<>();
 
