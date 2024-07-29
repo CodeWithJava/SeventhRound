@@ -39,7 +39,7 @@ public class Solution
 
 		while(p != null)
 		{
-			if(p.val == q.val)
+			if(p == q)
 				return p;
 
 			p = p.next;
