@@ -1,3 +1,68 @@
+// The Solution for the newer version
+class Solution {
+    public List<List<Integer>> findMissingRanges(int [] nums, int lower, int upper) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> t = new ArrayList<>();
+
+        if (nums == null || nums.length == 0) {
+            if (lower == upper) {
+                t.add(lower);
+                t.add(lower);
+                result.add(new ArrayList<>(t));
+            } else {
+                t.add(lower);
+                t.add(upper);
+                result.add(new ArrayList<>(t));
+            }
+
+            return result;
+        }
+
+        for (int i = 0;i <= nums.length;i++) {
+            if (i == 0) {
+                if ((long) lower + 1 == (long) nums[i]) {
+                    t = new ArrayList<>();
+                    t.add(lower);
+                    t.add(lower);
+                    result.add(new ArrayList<>(t));
+                } else if ((long) lower + 1 < (long) nums[i]) {
+                    t = new ArrayList<>();
+                    t.add(lower);
+                    t.add(nums[i] - 1);
+                    result.add(new ArrayList<>(t));
+                }
+            } else if (i == nums.length) {
+                if ((long) nums[i - 1] + 1 == (long) upper) {
+                    t = new ArrayList<>();
+                    t.add(upper);
+                    t.add(upper);
+                    result.add(new ArrayList<>(t));
+                } else if ((long) nums[i - 1] + 1 < (long) upper) {
+                    t = new ArrayList<>();
+                    t.add(nums[i - 1] + 1);
+                    t.add(upper);
+                    result.add(new ArrayList<>(t));
+                }
+            } else {
+                if ((long) nums[i - 1] + 2 == (long) nums[i]) {
+                    t = new ArrayList<>();
+                    t.add(nums[i - 1] + 1);
+                    t.add(nums[i - 1] + 1);
+                    result.add(new ArrayList<>(t));
+                } else if ((long) nums[i - 1] + 2 < (long) nums[i]) {
+                    t = new ArrayList<>();
+                    t.add(nums[i - 1] + 1);
+                    t.add(nums[i] - 1);
+                    result.add(new ArrayList<>(t));
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
+// The Solution for the older version
 public class Solution
 {
 	public List<String> findMissingRanges(int [] nums, int lower, int upper)
