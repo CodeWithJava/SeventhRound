@@ -17,7 +17,7 @@ public class Solution
 			{
 				if(Character.isUpperCase(x) && i == 0)
 				{
-				    upper++;
+				    	upper++;
 					continue;
 				}
 
