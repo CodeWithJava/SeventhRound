@@ -9,7 +9,7 @@ public class Solution
 		if(nums == null || nums.length == 0)
 			return result;
 
-        set = new HashSet<>();
+        	set = new HashSet<>();
 
 		List<Integer> holder = new ArrayList<>();
 
