@@ -1,112 +1,116 @@
-public class Solution
-{
-	public String alienOrder(String [] words)
-	{
-		if(words == null || words.length == 0)
-			return "";
+class Solution {
+    public String alienOrder(String [] words) {
+        if (words == null || words.length == 0) {
+            return "";
+        }
 
-		Map<Character, AlienChar> graph = new HashMap<>();
+        Map<Character, AlienChar> graph = new HashMap<>();
 
-		boolean isSuccessed = buildGraph(words, graph);
+        boolean isSuccessed = buildGraph(graph, words);
 
-		if(!isSuccessed)
-			return "";
+        if (!isSuccessed) {
+            return "";
+        }
 
-		String order = findOrder(graph);
+        String order = findOrder(graph);
 
-		return order.length() == graph.size() ? order:"";
-	}
+        return order.length() == graph.size() ? order:"";
+    }
 
-	private boolean buildGraph(String [] words, Map<Character, AlienChar> graph)
-	{
-		initialize(words, graph);
+    private boolean buildGraph(Map<Character, AlienChar> graph, String [] words) {
+        initialize(graph, words);
 
-		Set<String> exist = new HashSet<>();
+        Set<String> exist = new HashSet<>();
 
-		for(int i = 1;i < words.length;i++)
-		{
-			String p = words[i - 1];
-			String q = words[i];
+        for (int i = 1;i < words.length;i++) {
+            String p = words[i - 1];
+            String q = words[i];
 
-			Character prev = null;
-			Character next = null;
+            // Handle the corner case: ["abc", "ab"]
+	    if (p.length() > q.length() && p.startsWith(q)) {
+                return false;
+            }
 
-			for(int j = 0;j < p.length() && j < q.length();j++)
-			{
-				if(p.charAt(j) != q.charAt(j))
-				{
-					prev = p.charAt(j);
-					next = q.charAt(j);
-					break;
-				}
-			}
+            Character prev = null;
+            Character next = null;
 
-			if(prev != null && exist.contains(next + "" + prev))
-				return false;
+            for (int j = 0;j < p.length() && j < q.length();j++) {
+                if (p.charAt(j) != q.charAt(j)) {
+                    prev = p.charAt(j);
+                    next = q.charAt(j);
+                    break;
+                }
+            }
 
-			if(prev != null && !exist.contains(prev + "" + next))
-			{
-				addEdge(graph, prev, next);
-				exist.add(prev + "" + next);
-			}
-		}
+            if (prev != null && exist.contains(next + "" + prev)) {
+                return false;
+            }
 
-		return true;
-	}
+            if (prev != null && !exist.contains(prev + "" + next)) {
+                addEdge(graph, prev, next);
+                exist.add(prev + "" + next);
+            }
+        }
 
-	private void initialize(String [] words, Map<Character, AlienChar> graph)
-	{
-		for(String word: words)
-			for(int i = 0;i < word.length();i++)
-				if(!graph.containsKey(word.charAt(i)))
-					graph.put(word.charAt(i), new AlienChar(word.charAt(i)));
-	}
+        return true;
+    }
 
-	private void addEdge(Map<Character, AlienChar> graph, char prev, char next)
-	{
-		AlienChar prevAlienChar = graph.get(prev);
-		AlienChar nextAlienChar = graph.get(next);
+    private void addEdge(Map<Character, AlienChar> graph, char prev, char next) {
+        AlienChar prevAlienChar = graph.get(prev);
+        AlienChar nextAlienChar = graph.get(next);
 
-		prevAlienChar.nextVertexes.add(nextAlienChar);
-		nextAlienChar.inDegree++;
+        prevAlienChar.nextVertexes.add(nextAlienChar);
+        nextAlienChar.inDegree++;
 
-		graph.put(prev, prevAlienChar);
-		graph.put(next, nextAlienChar);
-	}
+        graph.put(prev, prevAlienChar);
+        graph.put(next, nextAlienChar);
+    }
 
-	private String findOrder(Map<Character, AlienChar> graph)
-	{
-		Queue<AlienChar> q = new LinkedList<>();
+    private void initialize(Map<Character, AlienChar> graph, String [] words) {
+        for (String word: words) {
+            for (char c: word.toCharArray()) {
+                if (!graph.containsKey(c)) {
+                    graph.put(c, new AlienChar(c));
+                }
+            }
+        }
+    }
 
-		for(char x: graph.keySet())
-			if(graph.get(x).inDegree == 0)
-				q.offer(graph.get(x));
+    private String findOrder(Map<Character, AlienChar> graph) {
+        Queue<AlienChar> q = new LinkedList<>();
 
-		StringBuilder sb = new StringBuilder();
+        for (char c: graph.keySet()) {
+            AlienChar x = graph.get(c);
 
-		while(!q.isEmpty())
-		{
-			AlienChar c = q.poll();
-			sb.append(c.val);
+            if (x.inDegree == 0) {
+                q.offer(x);
+            }
+        }
 
-			for(AlienChar x: c.nextVertexes)
-				if(--x.inDegree == 0)
-					q.offer(x);
-		}
+        StringBuilder sb = new StringBuilder();
 
-		return sb.toString();
-	}
+        while (!q.isEmpty()) {
+            AlienChar x = q.poll();
+            sb.append(x.val);
+
+            for (AlienChar node: x.nextVertexes) {
+                if (--node.inDegree == 0) {
+                    q.offer(node);
+                }
+            }
+        }
+
+        return sb.toString();
+    }
 }
-class AlienChar
-{
-	char val;
-	int inDegree;
-	List<AlienChar> nextVertexes;
+class AlienChar {
+    char val;
+    int inDegree;
+    List<AlienChar> nextVertexes;
 
-	AlienChar(char val)
-	{
-		this.val = val;
-		inDegree = 0;
-		nextVertexes = new ArrayList<>();
-	}
+    AlienChar(char val) {
+        this.val = val;
+        inDegree = 0;
+        nextVertexes = new ArrayList<>();
+    }
 }
