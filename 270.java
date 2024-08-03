@@ -1,22 +1,28 @@
 // Solution One
-public class Solution
-{
-	public int closestValue(TreeNode root, double target)
-	{
-		if(root == null)
-			throw new IllegalArgumentException("Input is invalid");
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        if (root == null) {
+            throw new IllegalArgumentException("Input is invalid.");
+        }
 
-		TreeNode node = root;
-		int result = root.val;
+        TreeNode p = root;
+        int result = root.val;
 
-		while(node != null)
-		{
-			result = Math.abs(node.val - target) > Math.abs(result - target) ? result:node.val;
-			node = target < node.val ? node.left:node.right;
-		}
+        while (p != null) {
+            double d1 = Math.abs(p.val - target);
+            double d2 = Math.abs(result - target);
 
-		return result;
-	}
+            if (d1 == d2) {
+                result = Math.min(result, p.val);
+            } else if (d1 < d2){
+                result = p.val;
+            }
+            
+            p = target < p.val ? p.left:p.right;
+        }
+
+        return result;
+    }
 }
 
 // Solution Two
@@ -40,11 +46,17 @@ public class Solution
 		if(node == null)
 			return;
 
-		if(Math.abs(node.val - target) < min)
+		double d = Math.abs(node.val - target);
+
+		if(d < min)
 		{
 			min = Math.abs(node.val - target);
 			result = node.val;
-		}
+		} 
+		else if (d == min)
+        	{
+            	result = Math.min(result, node.val);
+        	}
 
 		if(target < node.val)
 			traversal(node.left, target);
