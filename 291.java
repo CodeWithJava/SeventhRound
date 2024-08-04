@@ -12,8 +12,8 @@ public class Solution
 		if(pattern == null || pattern.length() == 0 || str == null || str.length() == 0)
 			return false;
 
-        set = new HashSet<>();
-        map = new HashMap<>();
+        	set = new HashSet<>();
+        	map = new HashMap<>();
 
 		traversal(pattern, str, 0, 0);
 
