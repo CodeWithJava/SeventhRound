@@ -69,3 +69,22 @@ public class Solution
 		return word.matches("[A-Z]+|[a-z]+|[A-Z][a-z]+");
 	}
 }
+
+// Solution Four
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        if (word == null || word.length() < 2) {
+            return true;
+        }
+
+        int caps = 0;
+
+        for (char c: word.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                caps++;
+            }
+        }
+
+        return caps == 0 || caps == word.length() || caps == 1 && Character.isUpperCase(word.charAt(0));
+    }
+}
