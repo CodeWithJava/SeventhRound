@@ -5,7 +5,7 @@ public class Solution
 		if((s == null || s.length() == 0) && (wordDict == null || wordDict.size() == 0))
 			return true;
 
-		if((s == null || s.length() == 0) && (wordDict == null || wordDict.size() == 0))
+		if(s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0)
 			return false;
 
 		boolean [] dp = new boolean [s.length() + 1];
