@@ -1,41 +1,37 @@
-public class ValidWordAbbr
-{
-	Map<String, Set<String>> map;
+class ValidWordAbbr {
+    Map<String, Set<String>> map;
 
-	ValidWordAbbr(String [] dictionary)
-	{
-		map = new HashMap<>();
+    public ValidWordAbbr(String[] dictionary) {
+        map = new HashMap<>();
 
-		if(dictionary == null || dictionary.length == 0)
-			return;
+        if (dictionary == null || dictionary.length == 0) {
+            return;
+        }
 
-		for(String x: dictionary)
-		{
-			String s = x;
+        for (String s: dictionary) {
+            String abbr = getAbbreviation(s);
 
-			if(s.length() > 2)
-				s = s.substring(0, 1) + (s.length() - 2) + s.substring(s.length() - 1);
+            if (!map.containsKey(abbr)) {
+                map.put(abbr, new HashSet<>());
+            }
 
-			if(!map.containsKey(s))
-				map.put(s, new HashSet<>());
+            map.get(abbr).add(s);
+        }
+    }
+    
+    public boolean isUnique(String word) {
+        String abbr = getAbbreviation(word);
 
-			map.get(s).add(x);
-		}
-	}
+        if (!map.containsKey(abbr)) {
+            return true;
+        }
 
-	public boolean isUnique(String word)
-	{
-		if(word == null)
-			return false;
+        Set<String> set = map.get(abbr);
 
-		String s = word;
+        return set.size() == 1 && set.contains(word);
+    }
 
-		if(s.length() > 2)
-			s = s.substring(0, 1) + (s.length() - 2) + s.substring(s.length() - 1);
-
-		if(!map.containsKey(s))
-			return true;
-		else
-			return map.get(s).contains(word) && map.get(s).size() == 1;
-	}
+    private String getAbbreviation(String s) {
+        return s.length() < 3 ? s:s.substring(0, 1) + (s.length() - 2) + s.substring(s.length() - 1);
+    }
 }
